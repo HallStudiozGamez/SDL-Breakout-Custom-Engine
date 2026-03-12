@@ -1,0 +1,8 @@
+compile.bat
+build/
+*.exe
+*.o
+*.obj
+*.log
+.vscode/
+*.json
