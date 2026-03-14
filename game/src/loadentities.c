@@ -5,7 +5,7 @@ void loadEntites(struct Game *game){
 	struct Entity player;
 	struct animatedSprite playerAnim;
 	initAnim(&playerAnim,1,16);
-	initEntity(&player,30,30,5);
+	initEntity(&player,30,30,1.2);
 	player.sprite = playerAnim;
 	entities[0] = player;
 }

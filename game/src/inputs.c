@@ -37,11 +37,35 @@ void handleInput(struct Game *game) {
 void playerInput(struct Game *game) {
 	const bool *state = SDL_GetKeyboardState(NULL);
 	game->entities[0].dy = 0;
+	game->entities[0].dx = 0;
+	double speed = game->entities[0].speed;
 	if (state[SDL_SCANCODE_UP]) {
-		game->entities[0].dy = -5;
+		if (state[SDL_SCANCODE_LEFT] | state[SDL_SCANCODE_RIGHT]){
+			game->entities[0].dy = -speed * (1/SDL_sqrt(2));
+		} else{
+			game->entities[0].dy = -speed;
+		}
 	}
 	if (state[SDL_SCANCODE_DOWN]) {
-		game->entities[0].dy = 5;
+		if (state[SDL_SCANCODE_LEFT] | state[SDL_SCANCODE_RIGHT]){
+			game->entities[0].dy = speed * (1/SDL_sqrt(2));
+		} else{
+			game->entities[0].dy = speed;
+		}
+	}
+	if (state[SDL_SCANCODE_LEFT]) {
+		if (state[SDL_SCANCODE_UP] | state[SDL_SCANCODE_DOWN]){
+			game->entities[0].dx = -speed * (1/SDL_sqrt(2));
+		} else{
+			game->entities[0].dx = -speed;
+		}
+	}
+	if (state[SDL_SCANCODE_RIGHT]) {
+		if (state[SDL_SCANCODE_UP] | state[SDL_SCANCODE_DOWN]){
+			game->entities[0].dx = speed * (1/SDL_sqrt(2));
+		} else{
+			game->entities[0].dx = speed;
+		}
 	}
 	updateEntity(game, 0);
 }

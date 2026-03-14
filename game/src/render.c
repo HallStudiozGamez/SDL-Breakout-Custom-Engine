@@ -15,15 +15,14 @@ void renderGame(struct Game *game) {
         drawRect(game, 160-2,i,4,16, WHITE);
     }
     renderPlayer(game);
+}
+void renderPlayer(struct Game *game) {
     if (game->entities[0].state == IDLE){
         game->entities[0].sprite.startFrame = 1;
         game->entities[0].sprite.animLength = 3;
         game->entities[0].sprite.animSpeed = fps(10);
     }
     animateEntity(game, 0);
-}
-void renderPlayer(struct Game *game) {
-    drawRect(game, game->entities[0].x,game->entities[0].y,40,40,WHITE);
     printf("(%f, ",game->entities[0].x);
     printf("%f)\n",game->entities[0].y);
 }
