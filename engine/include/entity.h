@@ -4,7 +4,9 @@
 struct Game;
 typedef enum {
 	IDLE,
-	WALK
+	WALK,
+	RUN,
+	DEAD
 } State;
 struct animatedSprite {
 	int sprite;

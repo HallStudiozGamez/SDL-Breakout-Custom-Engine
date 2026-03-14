@@ -1,6 +1,8 @@
 #include <update.h>
 #include <createwindow.h>
 #include <entity.h>
+#include <stdio.h>
+#include <math.h>
 void updatePlayer(struct Game *game){
 	struct Entity *player = &game->entities[0];
 	if (player->x < 0){
@@ -17,6 +19,10 @@ void updatePlayer(struct Game *game){
 }
 void updateBall(struct Game *game){
 	struct Entity *ball = &game->entities[1];
+	struct Entity *player = &game->entities[0];
+	int relvativeIntersect = ((player->x+16) - (ball->x+2));
+	int brickIDX = (ball->x / 30);
+	int brickIDY = ((ball->y-32) / 10);
 	if (ball->x < 0){
 		ball->x = 0;
 		ball->dx *= -1;
@@ -25,9 +31,25 @@ void updateBall(struct Game *game){
 		ball->x = 240 - 4;
 		ball->dx *= -1;
 	}
-	if (ball->y < 0){
-		ball->y = 0;
+	if (ball->y < 32){ //hud at 32px
+		ball->y = 32;
 		ball->dy *= -1;
 	}
+	if (-16 <= relvativeIntersect && relvativeIntersect <= 16){
+		if (player->y <= ball->y+4 && ball->y+4 <= player->y+4){
+			ball->y = player->y-4;
+			ball->dy *= -1;
+			int bounceAngle = relvativeIntersect * 60;
+			ball->dx = ball->speed*-sin(bounceAngle)*2;
+		}
+	}
+	if (ball->y > 320){
+		ball->x = 120;
+		ball->y = 200;
+		ball->dx = 0;
+		ball->dy = -ball->speed;
+		player->x = 120;
+	}
+	printf("(%d, %d\n)",brickIDX, brickIDY);
 	updateEntity(game, 1);
 }
