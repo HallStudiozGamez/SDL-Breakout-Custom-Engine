@@ -5,6 +5,9 @@
 #include "sprites.h"
 #include "entity.h"
 void renderPlayer(struct Game *game);
+double fps(int framePerSecond){
+    return (1000/framePerSecond);
+}
 void renderGame(struct Game *game) {
     clearScreen(game, BLACK);
     SDL_RenderClear(game->gameRenderer);
@@ -12,6 +15,11 @@ void renderGame(struct Game *game) {
         drawRect(game, 160-2,i,4,16, WHITE);
     }
     renderPlayer(game);
+    if (game->entities[0].state == IDLE){
+        game->entities[0].sprite.startFrame = 1;
+        game->entities[0].sprite.animLength = 3;
+        game->entities[0].sprite.animSpeed = fps(10);
+    }
     animateEntity(game, 0);
 }
 void renderPlayer(struct Game *game) {

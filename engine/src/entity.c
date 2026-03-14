@@ -7,9 +7,9 @@ void updateEntity(struct Game *game, int index){
 	game->entities[index].y += game->entities[index].dy;
 }
 void animateEntity(struct Game *game, int index){
-    game->entities[index].sprite.frame = (SDL_GetTicks() / 100) % game->entities[index].sprite.animLength;
+    game->entities[index].sprite.frame = (SDL_GetTicks() / game->entities[index].sprite.animSpeed) % game->entities[index].sprite.animLength;
 
-    drawFrame(game, game->entities[index].sprite.sprite, game->entities[index].x, game->entities[index].y, 16, 0);
+    drawFrame(game, game->entities[index].sprite.sprite, game->entities[index].x, game->entities[index].y, 16, game->entities[index].sprite.frame + game->entities[index].sprite.startFrame);
 }
 void initEntity(struct Entity *entity, float x, float y, float speed){
 	entity->x = x;
