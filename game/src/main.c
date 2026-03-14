@@ -8,7 +8,7 @@
 int main(int argc, char *argv[]) {
     bool exitStatus = EXIT_FAILURE;
     struct Game game = {0};
-    if (!createGameWindow(&game, 854, 480)) {
+    if (!createGameWindow(&game, 480, 640)) {
         return exitStatus;
     } else {
         exitStatus = EXIT_SUCCESS;

@@ -8,9 +8,9 @@
 #include "inputs.h"
 #include "render.h"
 #include "loadentities.h"
-#include "sprites.h"
-#define GAME_INTERNAL_WIDTH 320
-#define GAME_INTERNAL_HEIGHT 180
+#include "update.h"
+#define GAME_INTERNAL_WIDTH 240
+#define GAME_INTERNAL_HEIGHT 320
 #define SDL_FLAGS (SDL_INIT_VIDEO | SDL_INIT_EVENTS)
 #define WINDOW_TITLE "Game"
 bool createGameWindow(struct Game *game, int width, int height);
@@ -36,13 +36,9 @@ bool createGameWindow(struct Game *game, int width, int height) {
         return false;
     }
     SDL_SetRenderLogicalPresentation(game->gameRenderer, GAME_INTERNAL_WIDTH, GAME_INTERNAL_HEIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX);
-    const char *textures[] = {"assets/texture.png","assets/image.png"};
-    int size = sizeof(textures) / sizeof(textures[0]);
-    for (int i = 0; i < size; i++){
-        game->textures[i] = loadSprite(game,textures[i]);
-    }
     TTF_Init();
     game->font = TTF_OpenFont("assets/Jersey10-Regular.ttf", 18);
+    loadGraphics(game);
     loadEntites(game);
     return true;
 }
@@ -60,20 +56,12 @@ void closeGameWindow(struct Game *game) {
     TTF_Quit();
     SDL_Quit();
 }
-void updateEnemy(struct Game *game){
-    /*if(ball->cy - 8> game->enemy.y){
-        game->enemy.y += 3;
-    } else if(ball->cy + 8 < game->enemy.y){
-        game->enemy.y += -3;
-    }
-    if (game->points[0] == 10 || game->points[1]==10){
-        game->points[0] = 0;
-        game->points[1] = 0;
-    }*/
-}
+
 void gameRun(struct Game *game) {
     handleInput(game);
     playerInput(game);
+    updatePlayer(game);
+    updateBall(game);
     SDL_RenderClear(game->gameRenderer);
     renderGame(game);
     SDL_RenderPresent(game->gameRenderer);

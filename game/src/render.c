@@ -5,6 +5,7 @@
 #include "sprites.h"
 #include "entity.h"
 void renderPlayer(struct Game *game);
+void renderBall(struct Game *game);
 double fps(int framePerSecond){
     return (1000/framePerSecond);
 }
@@ -15,14 +16,21 @@ void renderGame(struct Game *game) {
         drawRect(game, 160-2,i,4,16, WHITE);
     }
     renderPlayer(game);
+    renderBall(game);
 }
 void renderPlayer(struct Game *game) {
-    if (game->entities[0].state == IDLE){
+    //example animation code if needed
+    /*if (game->entities[0].state == IDLE){
         game->entities[0].sprite.startFrame = 1;
         game->entities[0].sprite.animLength = 3;
         game->entities[0].sprite.animSpeed = fps(10);
-    }
-    animateEntity(game, 0);
-    printf("(%f, ",game->entities[0].x);
-    printf("%f)\n",game->entities[0].y);
+    }*/
+   drawRect(game, game->entities[0].x, game->entities[0].y, 32, 4, WHITE);
+}
+void renderBall(struct Game *game) {
+    drawRect(game, game->entities[1].x, game->entities[1].y, 4, 4, WHITE);
+}
+void printPlayer(struct Game *game){
+    printf("(%d, ",game->entities[0].x);
+    printf("%d)\n",game->entities[0].y);
 }

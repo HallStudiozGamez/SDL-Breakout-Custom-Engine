@@ -3,4 +3,5 @@
 #include <createwindow.h>
 #include <entity.h>
 void loadEntites(struct Game *game);
+void loadGraphics(struct Game *game);
 #endif
