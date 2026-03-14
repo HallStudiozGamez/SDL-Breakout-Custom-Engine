@@ -1,5 +1,7 @@
 #ifndef ENTITY_H
 #define ENTITY_H
+
+struct Game;
 typedef enum {
 	IDLE,
 	WALK
@@ -8,6 +10,7 @@ struct animatedSprite {
 	int sprite;
 	int animSpeed;
 	int frame;
+	int width;
 	int startFrame;
 	int animLength;
 };
@@ -20,5 +23,8 @@ struct Entity {
 	struct animatedSprite sprite;
 	State state;
 };
-void updateEntity(struct Entity *entity);
+void initEntity(struct Entity *entity, float x, float y, float speed);
+void initAnim(struct animatedSprite *anim, int sprite, int width);
+void updateEntity(struct Game *game, int index);
+void animateEntity(struct Game *game, int index);
 #endif

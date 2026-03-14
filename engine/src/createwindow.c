@@ -7,6 +7,7 @@
 #include "createwindow.h"
 #include "inputs.h"
 #include "render.h"
+#include "loadentities.h"
 #include "sprites.h"
 #define GAME_INTERNAL_WIDTH 320
 #define GAME_INTERNAL_HEIGHT 180
@@ -42,7 +43,7 @@ bool createGameWindow(struct Game *game, int width, int height) {
     }
     TTF_Init();
     game->font = TTF_OpenFont("assets/Jersey10-Regular.ttf", 18);
-
+    loadEntites(game);
     return true;
 }
 void closeGameWindow(struct Game *game) {
@@ -72,6 +73,7 @@ void updateEnemy(struct Game *game){
 }
 void gameRun(struct Game *game) {
     handleInput(game);
+    playerInput(game);
     SDL_RenderClear(game->gameRenderer);
     renderGame(game);
     SDL_RenderPresent(game->gameRenderer);

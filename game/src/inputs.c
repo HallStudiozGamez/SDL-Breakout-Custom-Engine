@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <SDL3/SDL.h>
 #include "inputs.h"
+#include "entity.h"
 #include <stdbool.h>
 void handleInput(struct Game *game) {
 	SDL_Event event;
@@ -35,14 +36,14 @@ void handleInput(struct Game *game) {
 }
 void playerInput(struct Game *game) {
 	const bool *state = SDL_GetKeyboardState(NULL);
-	/*player->dx = 0.0f;
-	player->dy = 0.0f;
+	game->entities[0].dy = 0;
 	if (state[SDL_SCANCODE_UP]) {
-		player->dy = -5.0f;
+		game->entities[0].dy = -5;
 	}
 	if (state[SDL_SCANCODE_DOWN]) {
-		player->dy = 5.0f;
-	}*/
+		game->entities[0].dy = 5;
+	}
+	updateEntity(game, 0);
 }
 
 
