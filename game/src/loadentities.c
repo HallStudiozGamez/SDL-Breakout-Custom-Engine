@@ -4,6 +4,7 @@
 #include <sprites.h>
 void loadEntites(struct Game *game){
 	game->points[0] = 0;
+	game->points[1] = 64;
 	struct Entity *entities = game->entities;
 	struct Entity player;
 	struct animatedSprite playerAnim;

@@ -31,6 +31,21 @@ int findMin(int a, int b) {
 		return b;
 	}
 }
+void updateBricks(struct Game *game){
+	struct Entity *ball = &game->entities[1];
+	struct Entity *player = &game->entities[0];
+	if (game->points[1] <= 0){
+		for (int i = 0; i < 64; i++){
+			game->entities[i+2].state = IDLE;
+		}
+		game->points[1] = 64;
+		ball->x = 120;
+		ball->y = 200;
+		ball->dx = 0;
+		ball->dy = -ball->speed;
+		player->x = 120;
+	}
+}
 void updateBall(struct Game *game){
 	struct Entity *ball = &game->entities[1];
 	struct Entity *player = &game->entities[0];
@@ -68,7 +83,7 @@ void updateBall(struct Game *game){
 	if (index < 66){
 		printf("%d\n",index);
 	}
-
+	
 	for (int i = findMax(2, index-2);i<findMin(66,index+2);i++){
 		SDL_Rect ballRect = {ball->x -2,ball->y -4,4,4};
 		SDL_Rect brick = {game->entities[i].x,game->entities[i].y, 30, 10};
@@ -78,8 +93,10 @@ void updateBall(struct Game *game){
 				ball->dy = 3;
 				game->entities[i].state = DEAD;
 				game->points[0] += (10 - brickIDY) * 10;
+				game->points[1] -= 1;
 			}
 		}
 	}
+	updateBricks(game);
 	updateEntity(game, 1);
 }

@@ -66,4 +66,5 @@ void gameRun(struct Game *game) {
     renderGame(game);
     SDL_RenderPresent(game->gameRenderer);
     SDL_Delay(16);
+
 }
