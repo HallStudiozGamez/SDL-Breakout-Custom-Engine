@@ -37,10 +37,13 @@ void drawLabel(struct Game *game, const char *text,float x, float y, uint8_t col
 
 }
 void drawLabelInt(struct Game *game, int text,float x, float y, uint8_t color[4]){
-	int length = floor(log10(text)) + 1;
+	int length = 2;
+	if (text > 9){
+		length = floor(log10(text)) + 2;
+	}
 	char buffer[length];
     snprintf(buffer, sizeof(buffer), "%d", text);
-    drawLabel(game, buffer, 90,30,WHITE);
+    drawLabel(game, buffer, x,y,WHITE);
 }
 void drawCircle(struct Game *game, float x, float y, float radius, uint8_t color[4]) {
 	SDL_SetRenderDrawColor(game->gameRenderer, color[0], color[1], color[2], color[3]);

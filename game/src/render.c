@@ -17,6 +17,7 @@ void renderGame(struct Game *game) {
     renderPlayer(game);
     renderBall(game);
     renderBricks(game);
+    drawLabelInt(game, game->points[0],20,10,WHITE);
 }
 void renderPlayer(struct Game *game) {
     //example animation code if needed
@@ -32,7 +33,9 @@ void renderBricks(struct Game *game) {
         uint8_t *color;
         uint8_t *colors[] = {RED, RED, ORANGE, YELLOW, GREEN, GREEN, BLUE, BLUE};
         color = colors[i/8];
-        drawRect(game, game->entities[i+2].x, game->entities[i+2].y, 28, 6, color);
+        if (game->entities[i+2].state == IDLE){
+            drawRect(game, game->entities[i+2].x, game->entities[i+2].y, 28, 6, color);
+        }
     }
 }
 void renderBall(struct Game *game) {

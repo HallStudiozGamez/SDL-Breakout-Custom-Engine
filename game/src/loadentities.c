@@ -3,6 +3,7 @@
 #include <math.h>
 #include <sprites.h>
 void loadEntites(struct Game *game){
+	game->points[0] = 0;
 	struct Entity *entities = game->entities;
 	struct Entity player;
 	struct animatedSprite playerAnim;
@@ -19,6 +20,7 @@ void loadEntites(struct Game *game){
 	for (int i = 0; i < 64; i++){
 		struct Entity brick;
 		initEntity(&brick, (i % 8)*30+2,floor(i / 8)*10+32, 0);
+		brick.state = IDLE;
 		entities[i+2] = brick;
 	}
 }

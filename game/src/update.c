@@ -17,12 +17,27 @@ void updatePlayer(struct Game *game){
 	}
 	updateEntity(game, 0);
 }
+int findMax(int a, int b) {
+	if (a > b) {
+		return a;
+	} else {
+		return b;
+	}
+}
+int findMin(int a, int b) {
+	if (a < b) {
+		return a;
+	} else {
+		return b;
+	}
+}
 void updateBall(struct Game *game){
 	struct Entity *ball = &game->entities[1];
 	struct Entity *player = &game->entities[0];
 	int relvativeIntersect = ((player->x+16) - (ball->x+2));
 	int brickIDX = (ball->x / 30);
 	int brickIDY = ((ball->y-32) / 10);
+	int index = (brickIDY * 8) + brickIDX + 2; //the 2 is because of the entity offset, 0 is the player, 1 is the ball.
 	if (ball->x < 0){
 		ball->x = 0;
 		ball->dx *= -1;
@@ -50,6 +65,21 @@ void updateBall(struct Game *game){
 		ball->dy = -ball->speed;
 		player->x = 120;
 	}
-	printf("(%d, %d\n)",brickIDX, brickIDY);
+	if (index < 66){
+		printf("%d\n",index);
+	}
+
+	for (int i = findMax(2, index-2);i<findMin(66,index+2);i++){
+		SDL_Rect ballRect = {ball->x -2,ball->y -4,4,4};
+		SDL_Rect brick = {game->entities[i].x,game->entities[i].y, 30, 10};
+		if (SDL_HasRectIntersection(&ballRect, &brick)){
+			if (game->entities[i].state == IDLE){
+				ball->dx *= -1;
+				ball->dy = 3;
+				game->entities[i].state = DEAD;
+				game->points[0] += (10 - brickIDY) * 10;
+			}
+		}
+	}
 	updateEntity(game, 1);
 }
