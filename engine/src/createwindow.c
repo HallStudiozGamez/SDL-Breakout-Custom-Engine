@@ -13,6 +13,7 @@
 #define GAME_INTERNAL_HEIGHT 320
 #define SDL_FLAGS (SDL_INIT_VIDEO | SDL_INIT_EVENTS)
 #define WINDOW_TITLE "Game"
+
 bool createGameWindow(struct Game *game, int width, int height);
 void closeGameWindow(struct Game *game);
 void gameRun(struct Game *game);
@@ -38,6 +39,8 @@ bool createGameWindow(struct Game *game, int width, int height) {
     SDL_SetRenderLogicalPresentation(game->gameRenderer, GAME_INTERNAL_WIDTH, GAME_INTERNAL_HEIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX);
     TTF_Init();
     game->font = TTF_OpenFont("assets/Jersey10-Regular.ttf", 18);
+    game->camera->x = 0;
+    game->camera->y = 0;
     loadGraphics(game);
     loadEntites(game);
     return true;
